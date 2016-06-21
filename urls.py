@@ -20,5 +20,11 @@ from . import views
 # under the License.
 
 urlpatterns = [
+    url(r'^$', views.index, name='posts'),
     url(r'^(?P<post_id>[0-9]+)/$', views.view_post, name='blog post'),
+    url(r'^push_notifications(.*.js)$', views.push_notifications, name="push notification endpoint"),
+    # Endpoint to add push notification subscriber
+    url(r'^api/add_subscriber/', views.add_subscriber, name="add push notification subscriber"),
+    # Endpoint to remove push notification subscriber
+    url(r'^api/remove_subscriber/', views.remove_subscriber, name="remove push notification subscriber"),
 ]
