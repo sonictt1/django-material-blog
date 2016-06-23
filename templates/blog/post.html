@@ -58,9 +58,16 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">{{ post_title }}</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="/">Home Page</a>
-          <a class="mdl-navigation__link" href="/blog/">Blog Home</a>
-          <a class="mdl-navigation__link" href="/store/">Store Home</a>
+          <a class="mdl-navigation__link" href="/"><i class="material-icons nav_drawer_icon" style="display: inline;">home</i>Home</a>
+          <a class="mdl-navigation__link" href="/store"><i class="material-icons nav_drawer_icon" style="display: inline;">store</i>Store Home</a>
+          <a class="mdl-navigation__link" href="/blog"><i class="material-icons nav_drawer_icon" style="display: inline;">library_books</i>Blog Home</a>
+        </nav>
+        <span class="mdl-layout-title">Stickied Posts</span>
+        <nav class="mdl-navigation tag-drawer">
+          {%for post in stickied_posts %}
+          <a class="mdl-navigation__link" href="{{post.id}}"><i class="material-icons nav_drawer_icon" style="display: inline;">format_align_justify</i>{{post.title}}</a>
+          {%endfor%}
+          <a class="mdl-navigation__link privacy-policy-nav-drawer" href="/store/faq">Privacy Policy & FAQ</a>
         </nav>
       </div>
       {% if post_img %}

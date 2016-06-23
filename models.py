@@ -12,6 +12,7 @@ class BlogPost(models.Model):
     deck = models.TextField(max_length=200)
     img_name = models.CharField(null=True, max_length=50, blank=True)
     post_body = HTMLField()
+    stickied = models.BooleanField(default=False, null=False)
 
 class PushSubscriber(models.Model):
     sub_id = models.CharField(null=False, unique=True, max_length=500)

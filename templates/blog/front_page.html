@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html style="height: 100%">
 <head>
   {% load staticfiles %}
   <link rel="manifest" href="{% static "blog_manifest/manifest.json" %}"/>
@@ -11,7 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 </head>
-<body bgcolor="#DBDBDB">
+<body bgcolor="#DBDBDB" style="height: 100%">
   <!-- Uses a header that scrolls with the text, rather than staying
   locked at the top -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -52,21 +52,16 @@
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Posts</span>
     <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="/">Home Page</a>
-
+      <a class="mdl-navigation__link" href="/"><i class="material-icons nav_drawer_icon" style="display: inline;">home</i>Home</a>
+      <a class="mdl-navigation__link" href="/store"><i class="material-icons nav_drawer_icon" style="display: inline;">store</i>Store Home</a>
+      <a class="mdl-navigation__link" href="/blog"><i class="material-icons nav_drawer_icon" style="display: inline;">library_books</i>Blog Home</a>
     </nav>
-    <span class="mdl-layout-title">Most Common Tags</span>
+    <span class="mdl-layout-title">Stickied Posts</span>
     <nav class="mdl-navigation tag-drawer">
-      {%for year,months in blog_dates.items %}
-      <div data-role="collapsible">
-        <h4>{{ year }}</h4>
-        <ul data-role="listview">
-          {% for month in months %}
-          <li><a class="mdl-navigation__link" href="?date={{year}}-{{month}}">{{month}}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
+      {%for post in stickied_posts %}
+      <a class="mdl-navigation__link" href="{{post.id}}"><i class="material-icons nav_drawer_icon" style="display: inline;">format_align_justify</i>{{post.title}}</a>
       {%endfor%}
+      <a class="mdl-navigation__link privacy-policy-nav-drawer" href="/store/faq">Privacy Policy & FAQ</a>
     </nav>
   </div>
   <main class="mdl-layout__content">

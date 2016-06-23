@@ -6,6 +6,11 @@
   margin: 13px auto;
 }
 
+.nav_drawer_icon {
+	margin-bottom: 15px;
+	margin-right: 5px;
+}
+
 .blog-deck {
   margin: auto;
   text-align: center;

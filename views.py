@@ -9,13 +9,15 @@ import calendar
 def view_post(request, post_id):
     template = loader.get_template('blog/post.html')
     post = BlogPost.objects.get(pk=post_id)
+    stickied_posts = BlogPost.objects.filter(stickied=True)
     context = {
         'post_title': post.title,
         'post_deck': post.deck,
         'post_header': post.img_name,
         'post_body': post.post_body,
         'date_published': post.publish_date,
-        'post_img': post.img_name
+        'post_img': post.img_name,
+        'stickied_posts': stickied_posts
     }
     return HttpResponse(template.render(context, request))
 
@@ -60,10 +62,12 @@ def index(request):
         else:
             posts = BlogPost.objects.order_by('publish_date').filter(publish_date__lte=datetime.date.today()).reverse().values()
 
+    stickied_posts = BlogPost.objects.filter(stickied=True)
     context = {
         'posts': posts,
         'tags': tags,
-        'blog_dates': blog_years
+        'blog_dates': blog_years,
+        'stickied_posts': stickied_posts
     }
     return HttpResponse(template.render(context, request))
 
