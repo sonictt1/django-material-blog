@@ -83,7 +83,7 @@ def get_days_in_month(year, month):
         return 30
 
 def push_notifications(request, js):
-    template = loader.get_template('store/push_notifications.js')
+    template = loader.get_template('blog/push_notifications.js')
     html = template.render()
     return HttpResponse(html, content_type="application/x-javascript")
 

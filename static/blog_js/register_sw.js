@@ -82,7 +82,7 @@ function checkSubscription(serviceWorkerRegistration) {
 
        if(!subscription) {
          subscribeButton.checked = false;
-         console.log("Note Subscribed", subscription);
+         console.log("Not Subscribed", subscription);
          return;
        }
        console.log("Subscribed", subscription);
