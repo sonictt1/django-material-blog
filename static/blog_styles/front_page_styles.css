@@ -75,7 +75,7 @@
   }
 }
 
-@@media (min-width: 425px) {
+@media (min-width: 425px) {
   .blog-with-image__text {
     color: white;
     margin-bottom: inherit;
