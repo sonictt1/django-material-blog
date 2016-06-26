@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
+from django.db.models import Q
 from models import BlogPost
 from models import PushSubscriber
 import datetime
@@ -27,6 +28,7 @@ def index(request):
     tag = request.GET.get('tag', None)
     year = request.GET.get('year', None)
     month = request.GET.get('month', None)
+    query = request.GET.get('query', None)
 
     blog_years= {}
     for post in BlogPost.objects.filter(publish_date__lte=datetime.date.today()):
@@ -48,6 +50,19 @@ def index(request):
                 posts = BlogPost.objects.order_by('publish_date').filter(tags__name__in=[tag], publish_date__lte=less_than_date, publish_date__gte=greater_than_date).reverse().values()
         else:
             posts = BlogPost.objects.order_by('publish_date').filter(tags__name__in=[tag], publish_date__lte=datetime.date.today()).reverse().values()
+    elif query:
+        if year:
+            if month:
+                month_num = list(calendar.month_abbr).index(str(month)[:3])
+                less_than_date = datetime.date(int(year), month_num, get_days_in_month(int(year), month_num))
+                greater_than_date = datetime.date(int(year), month_num, 1)
+                posts = BlogPost.objects.order_by('publish_date').filter(Q(publish_date__lte=datetime.date.today(), publish_date__gte=greater_than_date, title__icontains=query) | Q(publish_date__lte=datetime.date.today(), publish_date__gte=greater_than_date,  deck__icontains=query)).reverse().values()
+            else:
+                less_than_date = datetime.date(int(year), 12, 31)
+                greater_than_date = datetime.date(int(year), 1, 1)
+                posts = BlogPost.objects.order_by('publish_date').filter(Q(publish_date__lte=datetime.date.today(), publish_date__gte=greater_than_date, title__icontains=query) | Q(publish_date__lte=datetime.date.today(), publish_date__gte=greater_than_date,  deck__icontains=query)).reverse().values()
+        else:
+            posts = BlogPost.objects.order_by('publish_date').filter(Q(publish_date__lte=datetime.date.today(), title__icontains=query) | Q(publish_date__lte=datetime.date.today(), deck__icontains=query)).reverse().values()
     else:
         if year:
             if month:
